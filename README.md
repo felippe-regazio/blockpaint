@@ -4,7 +4,7 @@ This is a super simple Pixel Art Editor made in an old fashioned architecture.
 
 ## Usage
 
-Visit , or clone this repository and drop the `index.html, script.js, style.css` somewhere. Now just open the `index.html`.
+Visit <a href="https://felippe-regazio.github.io/blockpaint/">this page</a>, or clone this repository and drop the `index.html, script.js, style.css` somewhere. Now just open the `index.html`.
 
 ## Features
 
