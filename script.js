@@ -110,12 +110,20 @@ function save() {
   const filename = prompt('File name');
 
   if (filename) {
-    const a = document.createElement('a');
-    a.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(data)));
-    a.setAttribute('download', `${filename || `blockpaint-${Date.now()}`}.json`);
-    a.click();
-    a.remove();
+    download(
+      'data:text/plain;charset=utf-8,' +
+        encodeURIComponent(JSON.stringify(data)),
+      `${filename || `blockpaint-${Date.now()}`}.json`
+    );
   }
+}
+
+function download(content, filename) {
+  const a = document.createElement('a');
+  a.setAttribute('href', content);
+  a.setAttribute('download', filename);
+  a.click();
+  a.remove();
 }
 
 function load(e) {
