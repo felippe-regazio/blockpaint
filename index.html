@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BlockPaint</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>  
+  <ul id="options">
+    <li>
+      <label>
+        Size:
+        
+        <select name="viewbox-size" onchange="onSelectViewboxSize(event)">
+          <option value="24">LG (24x24)</option>
+          <option value="12">MD (12x12)</option>
+          <option value="6">SM (06x06)</option>
+        </select>
+      </label>
+    </li>
+
+    <li>
+      <label>
+        Grid:
+        
+        <input 
+          type="checkbox"
+          name="grid"
+          checked
+          onclick="onToggleGrid(event)"
+        >
+      </label>    
+    </li>
+
+    <li>
+      <label>
+        Color:
+  
+        <input 
+          type="color" 
+          name="color" 
+          value="#000000"
+          oninput="onPickColor(event)"
+        >
+      </label>
+    </li>
+
+    <li>
+      <button onclick="share()">Share</button>
+    </li>
+
+    <li>
+      <button onclick="save()">Save as</button>
+    </li>
+
+    <li>
+      <input type="file" onchange="load(event)" accept=".json"></button>
+    </li>
+  </ul>
+
+  <main>
+    <div id="box" data-size="24" class="grid"></div>
+  </main>
+
+  <footer>
+    <p>
+      Blockpaint by <a href="https://felipperegazio.com" target="_blank">Felippe Regazio</a> | <a href="">See on GitHub</a>
+    </p>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+</html>

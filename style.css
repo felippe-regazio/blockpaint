@@ -1,0 +1,100 @@
+:root { --selected-color: #000 }
+
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html *, body *{
+  box-sizing: border-box;
+}
+
+#options {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  margin-bottom: 42px;
+  list-style: none;
+}
+
+#options li:not(:last-of-type) {
+  margin-right: 8px;
+}
+
+#box {
+  --viewbox-size: 24;
+  height: 80vh;
+  width: 80vh;
+  max-width: 80vh;
+  max-height: 80vh;
+  cursor: crosshair;
+  border: solid 2px #eee;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  position: relative;
+  height: calc(100% / var(--viewbox-size));
+}
+
+#box.grid .row::before {
+  content: attr(data-y);
+  position: absolute;
+  font-size: 10px;
+  left: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+}
+
+.block {
+  display: block;
+  height: 100%;
+  position: relative;
+  width: calc(100% / var(--viewbox-size));
+}
+
+#box.grid .block {
+  outline: 1px solid #eee;
+}
+
+#box.grid .row:first-child .block::before {
+  content: attr(data-x);
+  position: absolute;
+  font-size: 10px;
+  left: 50%;
+  top: -16px;
+  transform: translateX(-50%);
+  color: #aaa;
+}
+
+.block:hover {
+  background-color: var(--selected-color);
+}
+
+footer {
+  padding: 10px;
+  font-size: 12px;
+  color: #aaa;
+  width: 100%;
+  text-align: right;
+}
+
+footer p {
+  text-align: center;
+}
+
+@media screen and (max-width: 760px) {
+  #box {
+    height: 80vw;
+    width: 80vw;
+    max-width: 80vw;
+    max-height: 80vw;
+  }
+}
