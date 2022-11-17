@@ -14,6 +14,10 @@ function block(x, y) {
     span.style.backgroundColor = $selectedColor;
   }
 
+  span.ondblclick = () => {
+    span.style.backgroundColor = '#ffffff';
+  }
+
   span.onmouseover = e => {
     if (e.buttons == 1 || e.buttons == 3) {
       span.style.backgroundColor = $selectedColor;
