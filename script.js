@@ -105,6 +105,43 @@ function loadBoxData(loaded) {
   });
 }
 
+function exportImage() {
+  const size = $box.dataset.size;
+  const canvas = document.createElement('canvas');
+
+  const scaleInput = Number(
+    prompt('Scale (each block will have this many pixels)')
+  );
+  const scale = isNaN(scaleInput) || !scaleInput ? 1 : scaleInput;
+  if (scale > 1000) {
+    const sure = confirm(
+      `Image will be ${size * scale}x${size * scale}px are you sure?`
+    );
+    if (!sure) return;
+  }
+
+  canvas.setAttribute('height', size * scale);
+  canvas.setAttribute('width', size * scale);
+  canvas.setAttribute('id', 'canvas');
+
+  const ctx = canvas.getContext('2d');
+
+  $box.querySelectorAll('.row').forEach((row, rowIndex) => {
+    const y = rowIndex * scale;
+    const blocks = Array.from(row.querySelectorAll('.block')).forEach(
+      (block, colIndex) => {
+        const x = colIndex * scale;
+        ctx.fillStyle = block.style.backgroundColor || 'white';
+        ctx.fillRect(x, y, scale, scale);
+      }
+    );
+  });
+
+  const filename = prompt('File name');
+  download(canvas.toDataURL(), `${filename || `blockpaint-${Date.now()}`}.jpg`);
+  canvas.remove();
+}
+
 function save() {
   const data = getBoxData();
   const filename = prompt('File name');
