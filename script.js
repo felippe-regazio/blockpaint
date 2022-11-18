@@ -13,6 +13,7 @@ function block(x, y) {
   span.onclick = () => {
     span.style.backgroundColor = $selectedColor;
   }
+
   span.ondblclick = () => {
     span.removeAttribute("style")
   }
