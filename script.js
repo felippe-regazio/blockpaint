@@ -13,9 +13,8 @@ function block(x, y) {
   span.onclick = () => {
     span.style.backgroundColor = $selectedColor;
   }
-
   span.ondblclick = () => {
-    span.style.backgroundColor = '#ffffff';
+    span.removeAttribute("style")
   }
 
   span.onmouseover = e => {
