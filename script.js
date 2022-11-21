@@ -110,19 +110,9 @@ function loadBoxData(loaded) {
 }
 
 function exportImage() {
+  const scale = 100;
   const size = $box.dataset.size;
-  const canvas = document.createElement('canvas');
-
-  const scaleInput = Number(
-    prompt('Scale (each block will have this many pixels)')
-  );
-  const scale = isNaN(scaleInput) || !scaleInput ? 1 : scaleInput;
-  if (scale > 1000) {
-    const sure = confirm(
-      `Image will be ${size * scale}x${size * scale}px are you sure?`
-    );
-    if (!sure) return;
-  }
+  const canvas = document.createElement('canvas');  
 
   canvas.setAttribute('height', size * scale);
   canvas.setAttribute('width', size * scale);
@@ -132,7 +122,8 @@ function exportImage() {
 
   $box.querySelectorAll('.row').forEach((row, rowIndex) => {
     const y = rowIndex * scale;
-    const blocks = Array.from(row.querySelectorAll('.block')).forEach(
+    
+    Array.from(row.querySelectorAll('.block')).forEach(
       (block, colIndex) => {
         const x = colIndex * scale;
         ctx.fillStyle = block.style.backgroundColor || 'white';
@@ -142,7 +133,7 @@ function exportImage() {
   });
 
   const filename = prompt('File name');
-  download(canvas.toDataURL(), `${filename || `blockpaint-${Date.now()}`}.jpg`);
+  download(canvas.toDataURL("image/jpeg"), `${filename || `blockpaint-${Date.now()}`}.jpeg`);
   canvas.remove();
 }
 
