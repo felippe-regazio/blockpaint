@@ -109,17 +109,62 @@ function loadBoxData(loaded) {
   });
 }
 
+function exportImage() {
+  const size = $box.dataset.size;
+  const canvas = document.createElement('canvas');
+
+  const scaleInput = Number(
+    prompt('Scale (each block will have this many pixels)')
+  );
+  const scale = isNaN(scaleInput) || !scaleInput ? 1 : scaleInput;
+  if (scale > 1000) {
+    const sure = confirm(
+      `Image will be ${size * scale}x${size * scale}px are you sure?`
+    );
+    if (!sure) return;
+  }
+
+  canvas.setAttribute('height', size * scale);
+  canvas.setAttribute('width', size * scale);
+  canvas.setAttribute('id', 'canvas');
+
+  const ctx = canvas.getContext('2d');
+
+  $box.querySelectorAll('.row').forEach((row, rowIndex) => {
+    const y = rowIndex * scale;
+    const blocks = Array.from(row.querySelectorAll('.block')).forEach(
+      (block, colIndex) => {
+        const x = colIndex * scale;
+        ctx.fillStyle = block.style.backgroundColor || 'white';
+        ctx.fillRect(x, y, scale, scale);
+      }
+    );
+  });
+
+  const filename = prompt('File name');
+  download(canvas.toDataURL(), `${filename || `blockpaint-${Date.now()}`}.jpg`);
+  canvas.remove();
+}
+
 function save() {
   const data = getBoxData();
   const filename = prompt('File name');
 
   if (filename) {
-    const a = document.createElement('a');
-    a.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(data)));
-    a.setAttribute('download', `${filename || `blockpaint-${Date.now()}`}.json`);
-    a.click();
-    a.remove();
+    download(
+      'data:text/plain;charset=utf-8,' +
+        encodeURIComponent(JSON.stringify(data)),
+      `${filename || `blockpaint-${Date.now()}`}.json`
+    );
   }
+}
+
+function download(content, filename) {
+  const a = document.createElement('a');
+  a.setAttribute('href', content);
+  a.setAttribute('download', filename);
+  a.click();
+  a.remove();
 }
 
 function load(e) {
