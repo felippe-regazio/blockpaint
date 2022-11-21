@@ -1,5 +1,7 @@
 let $selectedColor = '#000';
 const $box = document.getElementById('box');
+const $whellColors = ['#EF2929','#FCAF3E','#FCE94F','#8AE234','#729FCF','#AD7FA8','#888A85','#000000','#FFFFFF']
+let $whellColorsIndex = 0
 
 // ------------------------------------------------
 
@@ -42,6 +44,22 @@ function row(size, y) {
 
 function box(size, boxElement = $box) {
   boxElement.innerHTML = '';
+
+  //adiciona um evento no elemento box que altera as cores ao girar a roda do mouse (mouse whell)
+  //as cores alternadas estao especificadas no array $whellColors
+  boxElement.onwheel = (event) => {
+    event.preventDefault()
+
+    checkScrollDirectionIsUp(event)?$whellColorsIndex++:$whellColorsIndex--;
+
+    if ($whellColorsIndex >= $whellColors.length) $whellColorsIndex = 0;
+    else if ($whellColorsIndex < 0) $whellColorsIndex = $whellColors.length-1;
+
+    $selectedColor = $whellColors[$whellColorsIndex];
+
+    document.getElementById("color").value = $selectedColor
+    $box.style.setProperty('--selected-color', $selectedColor);
+  };
 
   for(let i = 0; i < size; i++) {
     const $row = row(size, i);
@@ -188,7 +206,15 @@ function share() {
       alert('Could not generate the share link');
     }
   );
-} 
+}
+
+//https://stackoverflow.com/a/44572049/2236741
+function checkScrollDirectionIsUp(event) {
+  if (event.wheelDelta) {
+    return event.wheelDelta > 0;
+  }
+  return event.deltaY < 0;
+}
 
 // ------------------------------------------------
 
